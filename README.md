@@ -5,7 +5,7 @@
 
 A delightful Tinder-style web app for cat lovers to discover their feline preferences through swipe gestures.
 
-![App Screenshot](screenshots/Paws%20%26%20Preferences%20S3.jpg) *(Add screenshot URL here)*
+![App Screenshot](screenshots/Paws%20%26%20Preferences%20S3.jpg)
 
 ## ✨ Features
 - **Swipe-to-like** interface (right for 👍, left for 👎)
