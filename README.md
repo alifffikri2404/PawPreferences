@@ -1,6 +1,6 @@
 # 🐾 Paws & Preferences: Find Your Favourite Kitty 
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://alifffikri2404.github.io/PawPreferences/) 
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://alifffikri2404.github.io/PawsPreferences/) 
 ![Tech Stack](https://img.shields.io/badge/stack-JS%20%7C%20CSS%20%7C%20HTML-orange)
 
 A delightful Tinder-style web app for cat lovers to discover their feline preferences through swipe gestures.
@@ -21,7 +21,7 @@ A delightful Tinder-style web app for cat lovers to discover their feline prefer
 
 ## 🚀 Quick Start
 1. **Try it now**:  
-   [Live Demo](https://alifffikri2404.github.io/PawPreferences/)
+   [Live Demo](https://alifffikri2404.github.io/PawsPreferences/)
 
 2. **Run locally**:
    ```bash
