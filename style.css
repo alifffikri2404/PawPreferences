@@ -27,7 +27,7 @@ header {
 header h1 {
   margin: 0;
   color: var(--accent);
-  font-size: 2.2rem;
+  font-size: 2.1rem;
 }
 
 header p {
@@ -100,6 +100,22 @@ main {
 
 .hidden {
   display: none;
+}
+
+.sub-heading {
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin: 0.0rem 0 0.8rem;
+  position: relative;
+  display: inline-block;
+}
+
+.sub-heading:after {
+  content: " 🐾";
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #summary {
