@@ -5,19 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Paws & Preferences</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Import Customized font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> 
 </head>
 <body>
+  <div class="app-container">
+    <header>
+      <h1>Paws & Preferences</h1>
+      <p>Swipe right to like, left to pass</p>
+    </header>
 
-  <div id="card-stack"></div>
+    <main>
+      <div class="main-content">
+        <div id="card-stack"></div>
+        <div id="summary" class="hidden">
+          <h2>You liked <span id="like-count"></span> cats!</h2>
+          <div id="liked-cats"></div>
+          <button id="replay-btn" class="replay-btn">Play Again</button>
+        </div>
+      </div>
+    </main>
 
-  <div id="summary" class="hidden">
-    <h2>You liked <span id="like-count"></span> cats!</h2>
-    <div id="liked-cats"></div>
+    <footer class="credits">
+      All photos credits from <a href="https://cataas.com/" target="_blank" rel="noopener">CATAAS</a>
+    </footer>
+  
   </div>
-
+  <!-- Local hammer.js have issue when deploy into github pages -->
   <!-- <script src="node_modules/hammerjs/hammer.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+
+  <!-- Load from hammer.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script> 
   <script src="scripts.js"></script>
 </body>
-
 </html>
