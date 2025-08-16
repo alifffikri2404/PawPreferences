@@ -190,10 +190,6 @@ footer a {
   font-weight: 600;
 }
 
-footer b {
-  font-weight: 400;
-}
-
 @media (max-width: 480px) {
   .app-container {
     padding: 15px;
