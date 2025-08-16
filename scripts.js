@@ -3,6 +3,8 @@ const summary = document.getElementById('summary');
 const likeCount = document.getElementById('like-count');
 const likedCatsContainer = document.getElementById('liked-cats');
 const replayBtn = document.getElementById('replay-btn');
+const likeIcon = document.createElement('div');
+const dislikeIcon = document.createElement('div');
 
 let likedCats = [];
 let cats = [];
@@ -18,6 +20,13 @@ async function loadCats(count = 5) {
 }
 
 function createCards() {
+  likeIcon.className = 'feedback-icon like-icon';
+  likeIcon.innerHTML = '👍🏻';
+  dislikeIcon.className = 'feedback-icon dislike-icon';
+  dislikeIcon.innerHTML = '👎🏻';
+  document.body.appendChild(likeIcon);
+  document.body.appendChild(dislikeIcon);
+
   cats.forEach((url, index) => {
     const card = document.createElement('div');
     card.classList.add('card');
@@ -38,21 +47,54 @@ function createCards() {
       ]
     });
 
-    // Handle both swipe and pan events
+    // Handle both swipe (touch) and pan (mouse) events
     hammer.on('swipeleft swiperight panleft panright', (ev) => {
       if (ev.type === 'panleft' || ev.type === 'panright') {
         if (ev.isFinal) {
+          hideFeedbackIcons();
           handleSwipe(ev, card, url);
         } else {
-          // Add some movement during pan for visual UX
+          // Feedback based on swipe direction
+          if (ev.deltaX > 0){
+            showFeedbackIcon(likeIcon, ev.center.x, ev.center.y);
+          } else {
+            showFeedbackIcon(dislikeIcon, ev.center.x, ev.center.y);
+          }
+          // Add some movement during pan (mouse) for visual UX
           card.style.transform = `translateX(${ev.deltaX}px) rotate(${ev.deltaX * 0.1}deg)`;
           card.style.opacity = 1 - Math.min(Math.abs(ev.deltaX) / 200, 0.5);
-        }
+        } 
       } else {
+        // For swipe gestures
+        if (ev.type === 'swiperight') {
+          showFeedbackIcon(likeIcon, ev.center.x, ev.center.y);
+        } else {
+          showFeedbackIcon(dislikeIcon, ev.center.x, ev.center.y);
+        }
+        setTimeout(() => hideFeedbackIcons(), 300);
         handleSwipe(ev, card, url);
       }
     });
   });
+}
+
+function showFeedbackIcon(icon, x, y) {
+  icon.style.display = 'block';
+  icon.style.left = `${x - 30}px`; // Center the icon
+  icon.style.top = `${y - 30}px`;
+  icon.style.opacity = '1';
+  icon.style.transform = 'scale(1)';
+}
+
+function hideFeedbackIcons() {
+  likeIcon.style.opacity = '0';
+  dislikeIcon.style.opacity = '0';
+  likeIcon.style.transform = 'scale(0.5)';
+  dislikeIcon.style.transform = 'scale(0.5)';
+  setTimeout(() => {
+    likeIcon.style.display = 'none';
+    dislikeIcon.style.display = 'none';
+  }, 200);
 }
 
 function handleSwipe(ev, card, url) {
@@ -82,19 +124,54 @@ function showSummary() {
   // summary.style.transition = 'opacity 0.3s ease';
   // summary.classList.remove('hidden');
   
-  // // Fade in 
+  // Fade in 
   // setTimeout(() => {
   //   summary.style.opacity = '1';
   // }, 10);
 
   likeCount.textContent = likedCats.length;
+  
+  // Clear previous content
   likedCatsContainer.innerHTML = '';
+
+  // Create message based on number of likes
+  const message = document.createElement('p');
+  message.className = 'result-message';
+
+  // Categorized messages with emojis for extra fun
+  const totalLikes = likedCats.length;
+  let resultMessage = '';
+  
+  if (totalLikes === 10) {
+    resultMessage = "🐱 PURRFECTION! You're a certified crazy cat person! 🐱";
+    message.style.color = 'green';
+    message.style.fontWeight = 'bold';
+  } else if (totalLikes >= 8) {
+    resultMessage = "😻 Cat-tastic! Are you sure you're not actually a cat in human form?";
+  } else if (totalLikes >= 4) {
+    resultMessage = "😼 Hmm... Do you actually like cats or just their memes?";
+  } else if (totalLikes >= 1) {
+    resultMessage = "🙀 Only a few? Maybe you're more of a dog person, or was that an accidental swipe?";
+  } else {
+    resultMessage = "🚨 ALERT: Possible robot detected! No human dislikes ALL cats!";
+    message.style.color = 'red';
+    message.style.fontWeight = 'bold';
+  }
+  message.textContent = resultMessage;
+  
+  // Append message before the liked cats gallery
+  likedCatsContainer.parentNode.insertBefore(message, likedCatsContainer);
+
+  // Count liked cats
   likedCats.forEach(url => {
     const img = document.createElement('img');
     img.src = url;
     img.loading = 'lazy';
     likedCatsContainer.appendChild(img);
   });
+  // Hide the card stack
+  cardStack.style.display = 'none';
+  // Show summary after hiding card stack
   summary.classList.remove('hidden');
     requestAnimationFrame(() => {
     summary.classList.add('visible');
@@ -108,6 +185,13 @@ function replay(){
   likedCats = [];
   summary.classList.remove('visible');
   summary.classList.add('hidden');
+  // Remove the result message if it exists
+  const existingMessage = document.querySelector('.result-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+  // Show the card stack again when replaying
+  cardStack.style.display = '';
   loadCats(10);
 }
 
